@@ -10,9 +10,10 @@ VPC load balancing RDS EC2
 - [ ] [How to Install Visual Studio Code on a Windows Computer](https://www.youtube.com/watch?v=S2RvmFMFjRs)
 - [ ] [How to Create an IAM User with Programmatic Access.](https://www.youtube.com/watch?v=5YnTstk3RxM)
 - [ ] [How to Install the AWS Command Line (CLI) on a Windows Computer](https://www.youtube.com/watch?v=Gc4KKVWl6TI)
-- [x] Terraform File Structure
+- [x] [Terraform File Structure](https://www.youtube.com/watch?v=6P5LjvrhiJc)
 - [x] [Use Terraform Module to Build a 3 Tier AWS Network VPC](https://www.youtube.com/watch?v=ZP_vAbjfFMs&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=6)
-- [ ] [Use Terraform Module to Create Nat Gateways](https://www.youtube.com/watch?v=PWoXb9MONrU&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=7)
+- [x] [Use Terraform Module to Create Nat Gateways](https://www.youtube.com/watch?v=PWoXb9MONrU&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=7)
+- [ ] [Use Terraform Module to Create Security Groups](https://www.youtube.com/watch?v=oohXRXjahFA&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=8)
 
 
 
@@ -44,15 +45,19 @@ resource "aws_vpc" "main" {
 ### Use Terraform Module to Build a 3 Tier AWS Network VPC
 This one is over an hour, set video speed 
 Creating
-* modules
-  * vpc
-    * [main.tf](./modules/vpc/main.tf)
-    * [variables.tf](./modules/vpc/variables.tf)
-    * [output.tf](./modules/vpc/output.tf)
   * jupiter-website-ecs
     * [backend.tf](./jupiter-website-ecs/backend.tf)
     * [main.tf](./jupiter-website-ecs/main.tf)
     * [variables.tf](./jupiter-website-ecs/variables.tf)
     * [variables.tf](./jupiter-website-ecs/variables.tfvars)
+* modules
+  * nat-gateway
+    * [main.tf](./modules/nat-gateway/main.tf)
+    * [output.tf](./modules/nat-gateway/variables.tf)
+  * vpc
+    * [main.tf](./modules/vpc/main.tf)
+    * [variables.tf](./modules/vpc/variables.tf)
+    * [output.tf](./modules/vpc/output.tf)
 ##### Built and destroyed the thing, moving on
+#### Added the nat-gateway module, built and destroyed
 
