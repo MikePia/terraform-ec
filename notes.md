@@ -15,6 +15,7 @@ VPC load balancing RDS EC2
 - [x] [Use Terraform Module to Create Nat Gateways](https://www.youtube.com/watch?v=PWoXb9MONrU&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=7)
 - [x] [Use Terraform Module to Create Security Groups](https://www.youtube.com/watch?v=oohXRXjahFA&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=8)
 - [x] [How to Create ECS Task Execution Role with Terraform Modules](https://www.youtube.com/watch?v=vEfAFVDguko)
+- [x] [How to Request an SSL Certificate from AWS Certificate Manager with Terraform Modules](https://www.youtube.com/watch?v=RRdYFwlCHic)
 
 
 
@@ -49,9 +50,17 @@ Creating
   * jupiter-website-ecs
     * [backend.tf](./jupiter-website-ecs/backend.tf)
     * [main.tf](./jupiter-website-ecs/main.tf)
+    * [terraform.tfvats](./jupiter-website-ecs/terraform.tfvars)
     * [variables.tf](./jupiter-website-ecs/variables.tf)
-    * [variables.tf](./jupiter-website-ecs/variables.tfvars)
 * modules
+  * acm
+    * [main.tf](./modules/acm/main.tf)
+    * [outputs.tf](./modules/acm/outputs.tf)
+    * [variables.tf](./modules/acm/variables.tf)
+  * ecs-tasks-execution-role
+    * [main.tf](./modules/ecs-tasks-execution-role/main.tf)
+    * [outputs.tf](./modules/ecs-tasks-execution-role/outputs.tf)
+    * [variables.tf](./modules/ecs-tasks-execution-role/variables.tf)
   * nat-gateway
     * [main.tf](./modules/nat-gateway/main.tf)
     * [output.tf](./modules/nat-gateway/variables.tf)
@@ -66,4 +75,30 @@ Creating
 ##### Built and destroyed the thing, moving on
 #### Added the nat-gateway module, built and destroyed
 #### Added security-groups Built
+#### Added iam creation for tasks execution role
+#### Added route53 domain name in acm module
+#### Request a certificate
+To complete this required a domain name
+a whois zerosubstance.org found the domain unowned so I registered it with Route53 but the certificate is still pending
+```whois zerosubstance.org```
+In the certificate manager on aws found these 4 nameservers working on it
 
+* zerosubstance.org	NS	Simple
+  * ns-1977.awsdns-55.co.uk.
+  * ns-677.awsdns-20.net.
+  * ns-424.awsdns-53.com.
+  * ns-1429.awsdns-50.org.
+	
+  
+  
+* zerosubstance.org	SOA	Simple
+  * ns-1977.awsdns-55.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
+* _1bd6faa92f36ae033d40b9e1ca006f2e.zerosubstance.org	CNAME	Simple	
+  * _2cefb8037ac6592ffa1e67f408cef4d1.vpgtsqjbxb.acm-validations.aws.
+* _67a12c064ed9291a7a09ad2f36f3fd33.zerosubstance.com.zerosubstance.org	CNAME	Simple
+  * _4b56fd0d87d38c91f52fe88b9c684da3.vpgtsqjbxb.acm-validations.aws.
+
+Then dig the ns retrieves a NOERROR
+```dig @ns-1977.awsdns-55.co.uk.  zerosubstance.org```
+```dig @8.8.8.8 zerosubstance.org ns |grep -i status``````
+Still I wait for status pending from the certificate manager with Amazon issued pending validation
