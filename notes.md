@@ -13,7 +13,8 @@ VPC load balancing RDS EC2
 - [x] [Terraform File Structure](https://www.youtube.com/watch?v=6P5LjvrhiJc)
 - [x] [Use Terraform Module to Build a 3 Tier AWS Network VPC](https://www.youtube.com/watch?v=ZP_vAbjfFMs&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=6)
 - [x] [Use Terraform Module to Create Nat Gateways](https://www.youtube.com/watch?v=PWoXb9MONrU&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=7)
-- [ ] [Use Terraform Module to Create Security Groups](https://www.youtube.com/watch?v=oohXRXjahFA&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=8)
+- [x] [Use Terraform Module to Create Security Groups](https://www.youtube.com/watch?v=oohXRXjahFA&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=8)
+- [x] [How to Create ECS Task Execution Role with Terraform Modules](https://www.youtube.com/watch?v=vEfAFVDguko)
 
 
 
@@ -54,10 +55,15 @@ Creating
   * nat-gateway
     * [main.tf](./modules/nat-gateway/main.tf)
     * [output.tf](./modules/nat-gateway/variables.tf)
+  * security-groups
+    * [main.tf](./modules/security-groups/main.tf)
+    * [outputs](./modules/security-groups/outputs.tf)
+    * [variables.tf](./modules/security-groups/variables.tf)
   * vpc
     * [main.tf](./modules/vpc/main.tf)
     * [variables.tf](./modules/vpc/variables.tf)
     * [output.tf](./modules/vpc/output.tf)
 ##### Built and destroyed the thing, moving on
 #### Added the nat-gateway module, built and destroyed
+#### Added security-groups Built
 
