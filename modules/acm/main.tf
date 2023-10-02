@@ -1,6 +1,6 @@
 # request public certificates from the amazon certificate manager.
 resource "aws_acm_certificate" "acm_certificate" {
-  domain_name               = var.domain_name
+  domain_name                = var.domain_name
   subject_alternative_names = [var.alternative_name]
   validation_method         = "DNS"
 
@@ -33,15 +33,6 @@ resource "aws_route53_record" "route53_record" {
   zone_id         = data.aws_route53_zone.route53_zone.id
 }
 
-resource "aws_route53_record" "route53_record" {
-  count = length(aws_acm_certificate.some-cert.domain_validation_options)
-
-  zone_id = var.zone_id
-  name    = element(aws_acm_certificate.some-cert.domain_validation_options.*.resource_record_name, count.index)
-  type    = element(aws_acm_certificate.some-cert.domain_validation_options.*.resource_record_type, count.index)
-  records = [element(aws_acm_certificate.some-cert.domain_validation_options.*.resource_record_value, count.index)]
-  ttl     = 60
-}
 
 # validate acm certificates
 resource "aws_acm_certificate_validation" "acm_certificate_validation" {

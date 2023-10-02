@@ -11,12 +11,18 @@ VPC load balancing RDS EC2
 - [ ] [How to Create an IAM User with Programmatic Access.](https://www.youtube.com/watch?v=5YnTstk3RxM)
 - [ ] [How to Install the AWS Command Line (CLI) on a Windows Computer](https://www.youtube.com/watch?v=Gc4KKVWl6TI)
 - [x] [Terraform File Structure](https://www.youtube.com/watch?v=6P5LjvrhiJc)
+- [ ] [How to Authenticate Terraform with AWS Provide](https://www.youtube.com/watch?v=_TPIs6iG71I&list=PL184oVW5ERMDGN0a7yowSQiH4qjsTeE5g&index=10)
 - [x] [Use Terraform Module to Build a 3 Tier AWS Network VPC](https://www.youtube.com/watch?v=ZP_vAbjfFMs&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=6)
 - [x] [Use Terraform Module to Create Nat Gateways](https://www.youtube.com/watch?v=PWoXb9MONrU&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=7)
 - [x] [Use Terraform Module to Create Security Groups](https://www.youtube.com/watch?v=oohXRXjahFA&list=PL184oVW5ERMCxA4336x_TM7q1Cs8y0x1s&index=8)
+- [ ] [How to Create an RDS Database Using Terraform (Version 0.11 and earlier)](https://www.youtube.com/watch?v=Qb34X78yNLs&list=PL184oVW5ERMDGN0a7yowSQiH4qjsTeE5g&index=14)
+- [ ] [Launching an RDS Instance Using Terraform](https://www.youtube.com/playlist?list=PL184oVW5ERMDGN0a7yowSQiH4qjsTeE5g)
+- [ ] The next is from a different playlst that shares a bunch of the previous vids
 - [x] [How to Create ECS Task Execution Role with Terraform Modules](https://www.youtube.com/watch?v=vEfAFVDguko)
 - [x] [How to Request an SSL Certificate from AWS Certificate Manager with Terraform Modules](https://www.youtube.com/watch?v=RRdYFwlCHic)
+- [x] [How to Create Application Load Balancer Using Terraform Modules](https://www.youtube.com/watch?v=1OYONBN2jgE)
 
+![Alt text](./images/arch.png) -->
 
 
 ### Terraform File Structure
@@ -54,24 +60,28 @@ Creating
     * [variables.tf](./jupiter-website-ecs/variables.tf)
 * modules
   * acm
-    * [main.tf](./modules/acm/main.tf)
-    * [outputs.tf](./modules/acm/outputs.tf)
-    * [variables.tf](./modules/acm/variables.tf)
+    * [acm_main.tf](./modules/acm/acm_main.tf)
+    * [acm_outputs.tf](./modules/acm/acm_outputs.tf)
+    * [acm_variables.tf](./modules/acm/acm_variables.tf)
+  * alb
+    * [alb_main.tf](./modules/alb/alb_main.tf)
+    * [alb_outputs.tf](./modules/alb/alb_outputs.tf)
+    * [alb_variables.tf](./modules/alb/alb_variables.tf)
   * ecs-tasks-execution-role
-    * [main.tf](./modules/ecs-tasks-execution-role/main.tf)
-    * [outputs.tf](./modules/ecs-tasks-execution-role/outputs.tf)
-    * [variables.tf](./modules/ecs-tasks-execution-role/variables.tf)
+    * [ete_main.tf](./modules/ecs-tasks-execution-role/ete_main.tf)
+    * [ete_outputs.tf](./modules/ecs-tasks-execution-role/ete_outputs.tf)
+    * [ete_variables.tf](./modules/ecs-tasks-execution-role/ete_variables.tf)
   * nat-gateway
-    * [main.tf](./modules/nat-gateway/main.tf)
-    * [output.tf](./modules/nat-gateway/variables.tf)
+    * [nat_main.tf](./modules/nat-gateway/nat_main.tf)
+    * [nat_output.tf](./modules/nat-gateway/nat_variables.tf)
   * security-groups
-    * [main.tf](./modules/security-groups/main.tf)
-    * [outputs](./modules/security-groups/outputs.tf)
-    * [variables.tf](./modules/security-groups/variables.tf)
+    * [sg_main.tf](./modules/security-groups/sg_main.tf)
+    * [sg_outputs](./modules/security-groups/sg_outputs.tf)
+    * [sg_variables.tf](./modules/security-groups/sg_variables.tf)
   * vpc
-    * [main.tf](./modules/vpc/main.tf)
-    * [variables.tf](./modules/vpc/variables.tf)
-    * [output.tf](./modules/vpc/output.tf)
+    * [vpc_main.tf](./modules/vpc/vpc_main.tf)
+    * [vpc_variables.tf](./modules/vpc/vpc_variables.tf)
+    * [vpc_output.tf](./modules/vpc/vpc_output.tf)
 ##### Built and destroyed the thing, moving on
 #### Added the nat-gateway module, built and destroyed
 #### Added security-groups Built
@@ -89,16 +99,10 @@ In the certificate manager on aws found these 4 nameservers working on it
   * ns-424.awsdns-53.com.
   * ns-1429.awsdns-50.org.
 	
-  
-  
-* zerosubstance.org	SOA	Simple
-  * ns-1977.awsdns-55.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
-* _1bd6faa92f36ae033d40b9e1ca006f2e.zerosubstance.org	CNAME	Simple	
-  * _2cefb8037ac6592ffa1e67f408cef4d1.vpgtsqjbxb.acm-validations.aws.
-* _67a12c064ed9291a7a09ad2f36f3fd33.zerosubstance.com.zerosubstance.org	CNAME	Simple
-  * _4b56fd0d87d38c91f52fe88b9c684da3.vpgtsqjbxb.acm-validations.aws.
-
-Then dig the ns retrieves a NOERROR
-```dig @ns-1977.awsdns-55.co.uk.  zerosubstance.org```
-```dig @8.8.8.8 zerosubstance.org ns |grep -i status``````
-Still I wait for status pending from the certificate manager with Amazon issued pending validation
+```bash
+dig @ns-1977.awsdns-55.co.uk.  zerosubstance.org
+dig @8.8.8.8 zerosubstance.org ns |grep -i status
+```
+My error ws misnaming the output variable zerosubstance.com ..
+The cool thing is by fixing that, terraform deletes the AWS stuff and recreates it correctly
+#### Added load balancer
